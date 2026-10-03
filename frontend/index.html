@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker - Premium FinTech Dashboard</title>
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+          <path d="M2 10h20"></path>
+        </svg>
+        <span class="brand-name">EXPENSE<br><small>TRACKER</small></span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-item active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+
+        <a href="#transactions" class="nav-item" onclick="document.getElementById('expensesTableBody').scrollIntoView({behavior: 'smooth'}); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"></path></svg>
+          Transactions
+        </a>
+
+        <a href="#add-expense" class="nav-item" onclick="document.getElementById('title').focus(); document.getElementById('expenseForm').scrollIntoView({behavior: 'smooth'}); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          Add Expense
+        </a>
+
+        <a href="#categories" class="nav-item" onclick="openModal('categoriesModal'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          Categories
+        </a>
+
+        <a href="#reports" class="nav-item" onclick="openModal('reportsModal'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Reports
+        </a>
+
+        <a href="#settings" class="nav-item" onclick="openModal('settingsModal'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Header Section -->
+      <header class="top-header">
+        <div class="greeting-container">
+          <h1 class="greeting-title">Good day, User</h1>
+          <p class="greeting-subtitle">Here's your financial overview.</p>
+        </div>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search data...">
+          </div>
+
+          <button class="btn-primary-gold" onclick="document.getElementById('expenseForm').scrollIntoView({behavior: 'smooth'}); document.getElementById('title').focus();">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Expense
+          </button>
+
+          <div class="user-profile" onclick="openModal('settingsModal');" style="cursor: pointer;" title="Click to edit profile settings">
+            <div class="avatar">U</div>
+            <span class="user-name profile-name">User</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Alert Container & Loading Spinner -->
+      <div id="alertContainer"></div>
+      
+      <div id="loadingSpinner" class="loading-spinner d-none">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- KPI Overview Cards Grid -->
+      <section class="kpi-grid">
+        
+        <div class="kpi-card card-navy">
+          <span class="kpi-label">Total Balance</span>
+          <div class="kpi-value-container">
+            <span class="currency currency-symbol">$</span>
+            <span id="balance" class="kpi-value">0.00</span>
+          </div>
+          <div class="card-footer-accent"></div>
+        </div>
+
+        <div class="kpi-card card-navy">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Income</span>
+            <span id="incomeChange" class="badge badge-success">0%</span>
+          </div>
+          <div class="kpi-value-container">
+            <span class="currency currency-symbol">$</span>
+            <span id="totalIncome" class="kpi-value">0.00</span>
+          </div>
+        </div>
+
+        <div class="kpi-card card-navy">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Expenses</span>
+            <span id="expenseChange" class="badge badge-danger">0%</span>
+          </div>
+          <div class="kpi-value-container">
+            <span class="currency currency-symbol">$</span>
+            <span id="totalAmount" class="kpi-value">0.00</span>
+          </div>
+        </div>
+
+        <div class="kpi-card card-navy">
+          <span class="kpi-label">Expense Count & Highest</span>
+
+          <div class="kpi-dual-values">
+            <div>
+              <small>Count:</small>
+              <strong id="expenseCount">0</strong>
+            </div>
+
+            <div>
+              <small>Highest:</small>
+              <strong>
+                <span class="currency currency-symbol">$</span>
+                <span id="highestExpense">0.00</span>
+              </strong>
+            </div>
+          </div>
+
+          <div class="progress-bar-container">
+            <div id="expenseProgressBar" class="progress-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Analytics & Data Visuals Grid -->
+      <section class="content-grid">
+        
+        <!-- Left Column: Transactions & Forms -->
+        <div class="grid-column-left">
+
+          <!-- Recent Transactions Section -->
+          <div class="panel-card" id="transactions">
+            <div class="panel-header">
+              <h3>Recent Expense Transactions</h3>
+
+              <div class="filter-wrapper">
+                <label for="categoryFilter">Filter:</label>
+
+                <select id="categoryFilter" class="custom-select">
+                  <option value="All">All Categories</option>
+                  <option value="Food">Food</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Bills">Bills</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="luxury-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th class="amount-header">
+                      Amount (<span class="currency-code">USD</span>)
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody id="expensesTableBody">
+                  <!-- Expenses dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Income Transactions Table -->
+          <div class="panel-card mt-4">
+            <div class="panel-header">
+              <h3>Income History</h3>
+            </div>
+
+            <div class="table-container">
+              <table class="luxury-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Source</th>
+                    <th>Date</th>
+                    <th class="amount-header">
+                      Amount (<span class="currency-code">USD</span>)
+                    </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody id="incomeTableBody">
+                  <!-- Income dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Add Expense & Income Forms Grid -->
+          <div class="forms-dual-grid mt-4">
+            
+            <!-- Add Expense Form -->
+            <div class="panel-card">
+              <h3 class="panel-title mb-3">Add Expense</h3>
+
+              <form id="expenseForm" class="modern-form">
+
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input
+                    type="text"
+                    id="title"
+                    class="form-input"
+                    placeholder="e.g. Starbucks"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="amount">
+                    Amount (<span class="currency-code">USD</span>)
+                  </label>
+
+                  <input
+                    type="number"
+                    id="amount"
+                    class="form-input"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="0.00"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="category">Category</label>
+
+                  <select id="category" class="form-input" required>
+                    <option value="">Choose category</option>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="date">Date</label>
+                  <input type="date" id="date" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn-submit-navy">
+                  Add Expense
+                </button>
+
+              </form>
+            </div>
+
+            <!-- Add Income Form -->
+            <div class="panel-card">
+              <h3 class="panel-title mb-3">Add Income</h3>
+
+              <form id="incomeForm" class="modern-form">
+
+                <div class="form-group">
+                  <label for="incomeTitle">Title</label>
+                  <input
+                    type="text"
+                    id="incomeTitle"
+                    class="form-input"
+                    placeholder="e.g. Monthly Salary"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="incomeAmount">
+                    Amount (<span class="currency-code">USD</span>)
+                  </label>
+
+                  <input
+                    type="number"
+                    id="incomeAmount"
+                    class="form-input"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="0.00"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="incomeSource">Source</label>
+
+                  <select id="incomeSource" class="form-input" required>
+                    <option value="">Choose source</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Freelance">Freelance</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="incomeDate">Date</label>
+                  <input type="date" id="incomeDate" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn-submit-green">
+                  Add Income
+                </button>
+
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right Column: Visual Charts -->
+        <div class="grid-column-right">
+          
+          <!-- Monthly Financial Tracking Chart Card -->
+          <div class="panel-card">
+
+            <div class="panel-header">
+              <h3>Monthly Financial Tracking</h3>
+              <span class="subtitle-small">Jan - Dec Overview</span>
+            </div>
+
+            <div class="chart-container">
+
+              <svg id="financialChart" viewBox="0 0 400 180" class="svg-chart">
+                <!-- Background Grid -->
+                <line x1="0" y1="30" x2="400" y2="30" stroke="#e2e8f0" stroke-dasharray="4" />
+                <line x1="0" y1="80" x2="400" y2="80" stroke="#e2e8f0" stroke-dasharray="4" />
+                <line x1="0" y1="130" x2="400" y2="130" stroke="#e2e8f0" stroke-dasharray="4" />
+
+                <!-- Dynamic chart paths -->
+                <path
+                  id="incomeChartPath"
+                  d=""
+                  fill="none"
+                  stroke="#10b981"
+                  stroke-width="3"
+                />
+
+                <path
+                  id="expenseChartPath"
+                  d=""
+                  fill="none"
+                  stroke="#ef4444"
+                  stroke-width="3"
+                />
+              </svg>
+
+              <div class="chart-legend">
+                <span class="legend-item">
+                  <i class="dot green"></i> Income
+                </span>
+
+                <span class="legend-item">
+                  <i class="dot red"></i> Expenses
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Category Distribution Breakdown Card -->
+          <div class="panel-card mt-4">
+
+            <div class="panel-header">
+              <h3>Category Breakdown</h3>
+            </div>
+
+            <div id="categoryBreakdownList" class="category-breakdown-list">
+              <!-- Categories dynamically populated by app.js -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Custom Edit Expense Modal -->
+  <div id="editModal" class="custom-modal-overlay">
+
+    <div class="custom-modal-card">
+
+      <div class="modal-header">
+        <h5>Edit Expense</h5>
+
+        <button
+          type="button"
+          class="close-btn"
+          onclick="closeModal('editModal');"
+        >
+          &times;
+        </button>
+      </div>
+
+      <form id="editExpenseForm" class="modern-form mt-3">
+
+        <input type="hidden" id="editId">
+
+        <div class="form-group">
+          <label for="editTitle">Title</label>
+          <input type="text" id="editTitle" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editAmount">
+            Amount (<span class="currency-code">USD</span>)
+          </label>
+
+          <input
+            type="number"
+            id="editAmount"
+            class="form-input"
+            step="0.01"
+            min="0.01"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="editCategory">Category</label>
+
+          <select id="editCategory" class="form-input" required>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Bills">Bills</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="editDate">Date</label>
+          <input type="date" id="editDate" class="form-input" required>
+        </div>
+
+        <button type="submit" class="btn-submit-navy mt-3">
+          Save Changes
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Custom Edit Income Modal -->
+  <div id="editIncomeModal" class="custom-modal-overlay">
+
+    <div class="custom-modal-card">
+
+      <div class="modal-header">
+        <h5>Edit Income</h5>
+
+        <button
+          type="button"
+          class="close-btn"
+          onclick="closeModal('editIncomeModal');"
+        >
+          &times;
+        </button>
+      </div>
+
+      <form id="editIncomeForm" class="modern-form mt-3">
+
+        <input type="hidden" id="editIncomeId">
+
+        <div class="form-group">
+          <label for="editIncomeTitle">Title</label>
+          <input type="text" id="editIncomeTitle" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="editIncomeAmount">
+            Amount (<span class="currency-code">USD</span>)
+          </label>
+
+          <input
+            type="number"
+            id="editIncomeAmount"
+            class="form-input"
+            step="0.01"
+            min="0.01"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="editIncomeSource">Source</label>
+
+          <select id="editIncomeSource" class="form-input" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="editIncomeDate">Date</label>
+          <input type="date" id="editIncomeDate" class="form-input" required>
+        </div>
+
+        <button type="submit" class="btn-submit-green mt-3">
+          Save Changes
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="custom-modal-overlay">
+
+    <div class="custom-modal-card">
+
+      <div class="modal-header">
+        <h5>User Settings</h5>
+
+        <button
+          type="button"
+          class="close-btn"
+          onclick="closeModal('settingsModal');"
+        >
+          &times;
+        </button>
+      </div>
+
+      <form
+        id="settingsForm"
+        class="modern-form mt-3"
+        onsubmit="event.preventDefault(); const newName = document.getElementById('settingUserNameInput').value; const selectedCurrency = document.getElementById('settingCurrency').value; if(newName){ updateUserName(newName); } if(typeof updateCurrency === 'function'){ updateCurrency(selectedCurrency); } closeModal('settingsModal'); showAlert('Preferences updated successfully!');"
+      >
+
+        <div class="form-group">
+          <label for="settingUserNameInput">Display Name</label>
+
+          <input
+            type="text"
+            id="settingUserNameInput"
+            class="form-input"
+            placeholder="e.g. Rami"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="settingCurrency">Primary Currency</label>
+
+          <select id="settingCurrency" class="form-input">
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="JOD">JOD (JD)</option>
+            <option value="GBP">GBP (£)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit-navy mt-3">
+          Save Preferences
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Categories Management Modal -->
+  <div id="categoriesModal" class="custom-modal-overlay">
+
+    <div class="custom-modal-card">
+
+      <div class="modal-header">
+        <h5>Manage Categories</h5>
+
+        <button
+          type="button"
+          class="close-btn"
+          onclick="closeModal('categoriesModal');"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="mt-3">
+
+        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 12px;">
+          Active Expense Categories:
+        </p>
+
+        <ul
+          style="list-style: none; padding: 0; margin: 0 0 16px 0; display: flex; flex-wrap: wrap; gap: 8px;"
+        >
+          <li>
+            <span class="badge" style="background:#e2e8f0; color:#1e293b; padding: 6px 12px;">
+              Food
+            </span>
+          </li>
+
+          <li>
+            <span class="badge" style="background:#e2e8f0; color:#1e293b; padding: 6px 12px;">
+              Transport
+            </span>
+          </li>
+
+          <li>
+            <span class="badge" style="background:#e2e8f0; color:#1e293b; padding: 6px 12px;">
+              Bills
+            </span>
+          </li>
+
+          <li>
+            <span class="badge" style="background:#e2e8f0; color:#1e293b; padding: 6px 12px;">
+              Entertainment
+            </span>
+          </li>
+
+          <li>
+            <span class="badge" style="background:#e2e8f0; color:#1e293b; padding: 6px 12px;">
+              Other
+            </span>
+          </li>
+        </ul>
+
+        <button
+          type="button"
+          class="btn-submit-navy"
+          onclick="closeModal('categoriesModal');"
+        >
+          Done
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Reports Modal -->
+  <div id="reportsModal" class="custom-modal-overlay">
+
+    <div class="custom-modal-card">
+
+      <div class="modal-header">
+        <h5>Financial Reports & Export</h5>
+
+        <button
+          type="button"
+          class="close-btn"
+          onclick="closeModal('reportsModal');"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="mt-3">
+
+        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 16px;">
+          Export your recorded expenses and income transactions for accounting.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+
+          <button
+            type="button"
+            class="btn-submit-navy"
+            onclick="downloadCSVReport();"
+          >
+            Download CSV Summary
+          </button>
+
+          <button
+            type="button"
+            class="btn-submit-green"
+            onclick="closeModal('reportsModal'); window.print();"
+          >
+            Print Dashboard Report
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
