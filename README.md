@@ -1,29 +1,39 @@
 # Expense Tracker
 
-A full-stack web application for tracking personal expenses.
+A simple full-stack web application for managing personal expenses.
+The application allows users to add, view, edit, and delete expenses, with data stored in a PostgreSQL database.
+
+## Links
+
+* GitHub Repository: https://github.com/arim0l0lm-create/Expense-Tracker-Design
+* Demo Video: https://www.youtube.com/watch?v=c1Cr_MlsoXU
+
+---
 
 ## Features
 
-* Add expenses
+* Add new expenses
 * View all expenses
-* Edit expenses
+* Edit existing expenses
 * Delete expenses
 * Filter expenses by category
-* Display total expenses
-* Display number of expenses
-* Display highest expense
-* Data stored in PostgreSQL
+* View total expenses
+* View the highest expense
+* View the number of expenses
+* Store expense data using PostgreSQL
 * REST API using Node.js and Express
-* Responsive design using Bootstrap
+* Responsive user interface
 
-## Technologies
+---
+
+## Technologies Used
 
 ### Frontend
 
-* HTML
-* CSS
-* JavaScript
-* Bootstrap
+* HTML5
+* CSS3
+* JavaScript (ES6+)
+* Bootstrap 5
 
 ### Backend
 
@@ -34,10 +44,11 @@ A full-stack web application for tracking personal expenses.
 * dotenv
 * CORS
 
+---
+
 ## Project Structure
 
-```text
-expense-tracker/
+Expense-Tracker-Design/
 ├── frontend/
 │   ├── index.html
 │   ├── css/
@@ -47,99 +58,93 @@ expense-tracker/
 │
 ├── backend/
 │   ├── server.js
-│   ├── package.json
 │   ├── schema.sql
+│   ├── package.json
 │   └── .env.example
 │
 ├── .gitignore
 └── README.md
-```
 
-## Setup
+---
 
-### 1. Create the database
+## How to Run the Application
+
+### 1. Database Setup
 
 Create a PostgreSQL database named:
 
-```text
 expense_tracker
-```
 
-Then open `backend/schema.sql` and run it inside the `expense_tracker` database.
+Then run the SQL commands inside:
 
-### 2. Configure environment variables
+backend/schema.sql
 
-Create a `.env` file inside the `backend` folder.
+This will create the required database table.
 
-Use `.env.example` as a template:
+### 2. Backend Setup
 
-```env
+Open a terminal and navigate to the backend folder:
+
+cd backend
+
+Create a `.env` file based on `.env.example` and add your PostgreSQL connection details:
+
 DB_NAME=expense_tracker
 DB_USER=postgres
 DB_PASSWORD=your_password_here
 DB_HOST=localhost
 DB_PORT=5432
-```
+PORT=3000
 
-Replace `your_password_here` with your PostgreSQL password.
+Install the required packages:
 
-### 3. Install backend dependencies
-
-Open a terminal inside the `backend` folder and run:
-
-```bash
 npm install
-```
 
-### 4. Start the server
+Start the backend server:
 
-Run:
-
-```bash
 node server.js
-```
 
-The server will run at:
+The server should run at:
 
-```text
 http://localhost:3000
-```
 
-### 5. Open the frontend
+### 3. Frontend Setup
 
-Open:
+Open the `frontend` folder and open:
 
-```text
-frontend/index.html
-```
+index.html
 
-in a web browser.
+The frontend can be opened directly in a browser or using the Live Server extension in VS Code.
+
+Make sure the backend server is running before using the application.
+
+---
 
 ## API Endpoints
 
-| Method | Endpoint            | Description       |
-| ------ | ------------------- | ----------------- |
-| GET    | `/api/expenses`     | Get all expenses  |
-| GET    | `/api/expenses/:id` | Get one expense   |
-| POST   | `/api/expenses`     | Add an expense    |
-| PUT    | `/api/expenses/:id` | Update an expense |
-| DELETE | `/api/expenses/:id` | Delete an expense |
+| Method | Endpoint          | Description          |
+| ------ | ----------------- | -------------------- |
+| GET    | /api/expenses     | Get all expenses     |
+| GET    | /api/expenses/:id | Get a single expense |
+| POST   | /api/expenses     | Create a new expense |
+| PUT    | /api/expenses/:id | Update an expense    |
+| DELETE | /api/expenses/:id | Delete an expense    |
 
-## Categories
+---
 
-The available expense categories are:
+## Challenges Faced
 
-* Food
-* Transport
-* Bills
-* Entertainment
-* Other
+During the development of the project, I faced a few challenges, especially while setting up the PostgreSQL database and connecting it to the backend.
+
+Another challenge was handling the connection between the frontend and backend and making sure API requests were handled correctly using async/await.
+
+I also had to configure environment variables and make sure sensitive information such as the database password was not included in the repository.
+
+---
 
 ## Notes
 
-The `.env` file contains local database credentials and should not be submitted.
-
-The `node_modules` folder should also not be included in the submitted project.
-
-## Demo Video
-[Click here to watch the demo video] https://www.youtube.com/watch?v=c1Cr_MlsoXU
+* The `.env` file is not included in the repository because it contains local database credentials.
+* The `node_modules` folder is also excluded from the repository.
+* The project uses PostgreSQL for storing expense data.
+* Make sure PostgreSQL is running before starting the backend server.
